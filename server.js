@@ -40,7 +40,7 @@ routerProductos.post("/",async (req,res)=>{
     try {
         const resp = await manejador.create(req.body);
         //console.log("create: ",resp)
-        res.status(200).send(resp)
+        res.status(resp.status).json(resp.message)
     } catch (error) {
         res.status(400).send({"error":error});
     }

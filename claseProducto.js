@@ -4,7 +4,8 @@ class ClaseProducto {
     }
 
     static id = 0;
-    static productos = [{
+    static productos = [
+        {
         "id": 1,
         "name": "Escuadra",
         "price": 123.45,
@@ -29,12 +30,10 @@ class ClaseProducto {
             ClaseProducto.productos.push({id:ClaseProducto.id,...producto});
             return {
                 "status":200,
-                "message":"Producto guardado en el arreglo",
-                "data":ClaseProducto.productos
+                "message":"Producto guardado en el arreglo"
             };
 
         } catch (error) {
-            console.log("error: ",error)
             return "Error al guardar el archivo";
         }
     }
@@ -43,16 +42,17 @@ class ClaseProducto {
         return ClaseProducto.productos;
     }
 
-    async getById(id){
+     getById(id){
         try {
             console.log("idbusca: ",id)
             console.log("buscaren: ",ClaseProducto.productos)
 
-            const producto =  ClaseProducto.productos.find(e=>e.id === id);
-            console.log("producto: ",producto)
+            const producto = ClaseProducto.productos.find(e=>e.id === id*1);
+            //console.log("producto: ",producto)
             return producto;
 
         } catch (error) {
+            console.log(error)
             return {"error":"producto no encontrado"};
         }
     }

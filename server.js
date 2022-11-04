@@ -1,14 +1,20 @@
 const express = require('express');
 const { Router } = require('express');
 const ClaseProducto = require("./claseProducto");
+const bodyParser = require("body-parser");
 
 const app = express();
 
 const PORT = 8080;
 
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
+app.use(express.static("public"))
+
 app.listen( PORT, ()=>{
     console.log(`Servidor escuchando el puerto: ${PORT}`);
-})
+});
+
 
 const manejador = new ClaseProducto([]);
 //console.log("manejador:  ",manejador);
@@ -22,17 +28,22 @@ routerProductos.get("/",async(req,res)=>{
 });
 
 routerProductos.get("/:id",async (req,res)=>{
-    console.log("getProductoById: ",req.params.id);
     const resp = await manejador.getById(req.params.id);
-    console.log("respuesta: ",resp)
-    if(!resp)
+    if(!resp){
         res.status(400).send({"error":"producto no encontrado"});
+    }else{
+        res.status(200).json(resp)
+    }
 });
 
-routerProductos.post("/",(req,res)=>{
-    let producto = req.body;
-    console.log("producto: ",producto)
-   
+routerProductos.post("/",async (req,res)=>{
+    try {
+        const resp = await manejador.create(req.body);
+        //console.log("create: ",resp)
+        res.status(200).send(resp)
+    } catch (error) {
+        res.status(400).send({"error":error});
+    }
 })
 
 routerProductos.put("/:id",(req,res)=>{

@@ -25,22 +25,16 @@ class ClaseProducto {
 
     async create(producto){
         try {
-            if(this.productos.length>0){
-                
-                productos.push(producto);
-                await fs.promises.writeFile(this.filename, JSON.stringify(productos,null,2));
-                //console.log("Se agrega nuevo producto al arreglo")
-                
-            }else{
-                console.log("producto: ",producto)
-                producto.id = ClaseProducto.id++;
-                ClaseProducto.productos.push([...producto]);
-                console.log("Se añade primer productoal arreglo ");
-                
-            }
-            return "Producto guardado en el arreglo";
+            ClaseProducto.id++;
+            ClaseProducto.productos.push({id:ClaseProducto.id,...producto});
+            return {
+                "status":200,
+                "message":"Producto guardado en el arreglo",
+                "data":ClaseProducto.productos
+            };
 
         } catch (error) {
+            console.log("error: ",error)
             return "Error al guardar el archivo";
         }
     }

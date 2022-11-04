@@ -52,9 +52,13 @@ routerProductos.put("/:id",(req,res)=>{
 });
 
 routerProductos.delete("/:id",async (req,res)=>{
-    console.log("deleteProducto: ",req.params.id);
-    const resp = await manejador.deleteById(req.params.id);
-    res.send(`devolviendo producto eliminado ${resp}`);
+    //console.log("deleteProducto: ",req.params.id);
+    try {
+        const resp = await manejador.deleteById(req.params.id);
+        res.status(resp.status).send(resp.message);
+    } catch (error) {
+        res.status(400).send({"error":error});
+    }
 });
 
 

@@ -59,9 +59,11 @@ class ClaseProducto {
 
     async deleteById(id){
         try {
-            const newProducts = ClaseProducto.productos.filter(elemento=>elemento.id !== id);
-            ClaseProducto.productos=newProducts;
-            return "Producto eliminado";
+            ClaseProducto.productos=ClaseProducto.productos.filter(elemento=>elemento.id !== id*1);
+            return {
+                "status":200,
+                "message":`Producto eliminado del arreglo (id:${id})`
+            };
         } catch (error) {
             //console.log("error al quitar elemento del arreglo")
             return "error al quitar elemento del arreglo";

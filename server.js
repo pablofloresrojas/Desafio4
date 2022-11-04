@@ -23,14 +23,13 @@ const routerProductos = Router();
 
 routerProductos.get("/",async(req,res)=>{
     const all = await manejador.getAll();
-    console.log("todos: ",all);
     res.status(200).send(all);
 });
 
 routerProductos.get("/:id",async (req,res)=>{
     const resp = await manejador.getById(req.params.id);
     if(!resp){
-        res.status(400).send({"error":"producto no encontrado"});
+        res.status(400).json({"error":"producto no encontrado"});
     }else{
         res.status(200).json(resp)
     }
@@ -39,15 +38,15 @@ routerProductos.get("/:id",async (req,res)=>{
 routerProductos.post("/",async (req,res)=>{
     try {
         const resp = await manejador.create(req.body);
-        //console.log("create: ",resp)
         res.status(resp.status).json(resp.message)
     } catch (error) {
-        res.status(400).send({"error":error});
+        res.status(400).json({"error":error});
     }
 })
 
-routerProductos.put("/:id",(req,res)=>{
-    console.log("updateProducto: ",req.params.id);
+routerProductos.put("/:id",async (req,res)=>{
+    const resp = await manejador.update(req.params.id,req.body);
+    console.log("respuesta:",resp)
     res.send(`devolviendo producto actualizado ${req.params.id}`);
 });
 
@@ -57,7 +56,7 @@ routerProductos.delete("/:id",async (req,res)=>{
         const resp = await manejador.deleteById(req.params.id);
         res.status(resp.status).send(resp.message);
     } catch (error) {
-        res.status(400).send({"error":error});
+        res.status(400).json({"error":error});
     }
 });
 

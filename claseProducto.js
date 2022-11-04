@@ -4,25 +4,7 @@ class ClaseProducto {
     }
 
     static id = 0;
-    static productos = [
-        {
-        "id": 1,
-        "name": "Escuadra",
-        "price": 123.45,
-        "thumbnail": "https://cdn3.iconfinder.com/data/icomns/education-209/64/ruler-triangle-stationary-school-256.png"
-      },
-      {
-        "id": 2,
-        "name": "Calculadora",
-        "price": 234.56,
-        "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png"
-      },
-      {
-        "id": 3,
-        "name": "Globo Terráqueo",
-        "price": 345.67,
-        "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geography-planet-school-256.png"
-      }];
+    static productos = [];
 
     async create(producto){
         try {
